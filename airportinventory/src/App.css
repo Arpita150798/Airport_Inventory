@@ -1,0 +1,79 @@
+@import "https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css";
+@import url('https://fonts.googleapis.com/css?family=Rokkitt|Yeon+Sung&display=swap');
+
+.homePageBackground { 
+  margin: 0; 
+  font-family: 'Rokkitt', cursive !important; 
+  font-size: 1.05em !important;
+  overflow-x: hidden;
+  background: linear-gradient(-45deg, teal, white);
+  min-height: 100vh;
+}
+body{
+  margin: 0; 
+  font-family: 'Rokkitt', cursive !important; 
+  font-size: 1.05em !important;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+.btn{
+  margin: 5px;
+}
+.btn-light{
+  border: 1px solid gray;
+}
+.padded-content{
+  padding: 50px 20px;
+}
+.form-content{
+  padding: 20px 30px;
+  padding-bottom: 10px;
+  border: 1px solid lightgray;
+  border-radius: 8px;
+  background-color: white;
+}
+.center-content{
+  text-align: center;
+  color: black;
+}
+.right-content{
+  text-align: right;
+}
+.form-content{
+  width: 500px;
+  align-self: center;
+  margin-top: 100px;
+  margin-left: 435px;
+}
+h1{
+  margin-top: 50px;
+}
+th{
+  cursor: pointer;
+}
+th:hover {
+  background-color: aliceblue;
+}
+
+.airport-form-content{
+  padding: 20px 30px;
+  padding-bottom: 10px;
+  border: 1px solid lightgray;
+  border-radius: 8px;
+  background-color: white;
+  
+}
+.row{
+  margin-top: 20px;
+  margin-left: 50px;
+}
+.table-responsive{
+  width: 80%;
+  margin-top: 20px;
+}
+.requiredAstrick{
+  color: red;
+}
+.noWidth {
+  width: 0px;
+}

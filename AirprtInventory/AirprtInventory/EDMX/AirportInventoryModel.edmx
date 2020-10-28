@@ -1,0 +1,273 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AirportInventoryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Aircrafts">
+          <Key>
+            <PropertyRef Name="AircraftId" />
+          </Key>
+          <Property Name="AircraftId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Aircraft_No" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Airline" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Airports">
+          <Key>
+            <PropertyRef Name="AirportId" />
+          </Key>
+          <Property Name="AirportId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AirportName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Fuel_Capacity_Available" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Transactions">
+          <Key>
+            <PropertyRef Name="Transaction_Id" />
+          </Key>
+          <Property Name="Transaction_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Transaction_Type" Type="bit" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="Transaction_DateTime" Type="datetime" Nullable="false" />
+          <Property Name="Airport_Id" Type="int" Nullable="false" />
+          <Property Name="Aircraft_Id" Type="int" />
+          <Property Name="Transaction_Parent_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UseName" Type="nvarchar(max)" />
+          <Property Name="UserEmail" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsLoggedIn" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Transacti__Aircr__49C3F6B7">
+          <End Role="Aircrafts" Type="Self.Aircrafts" Multiplicity="0..1" />
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aircrafts">
+              <PropertyRef Name="AircraftId" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="Aircraft_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transacti__Airpo__47DBAE45">
+          <End Role="Airports" Type="Self.Airports" Multiplicity="1" />
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airports">
+              <PropertyRef Name="AirportId" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="Airport_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transacti__Trans__46E78A0C">
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="0..1" />
+          <End Role="Transactions1" Type="Self.Transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transactions">
+              <PropertyRef Name="Transaction_Id" />
+            </Principal>
+            <Dependent Role="Transactions1">
+              <PropertyRef Name="Transaction_Parent_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AirportInventoryModelStoreContainer">
+          <EntitySet Name="Aircrafts" EntityType="Self.Aircrafts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Airports" EntityType="Self.Airports" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Transacti__Aircr__49C3F6B7" Association="Self.FK__Transacti__Aircr__49C3F6B7">
+            <End Role="Aircrafts" EntitySet="Aircrafts" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transacti__Airpo__47DBAE45" Association="Self.FK__Transacti__Airpo__47DBAE45">
+            <End Role="Airports" EntitySet="Airports" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transacti__Trans__46E78A0C" Association="Self.FK__Transacti__Trans__46E78A0C">
+            <End Role="Transactions" EntitySet="Transactions" />
+            <End Role="Transactions1" EntitySet="Transactions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AirportInventoryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Aircraft">
+          <Key>
+            <PropertyRef Name="AircraftId" />
+          </Key>
+          <Property Name="AircraftId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Aircraft_No" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Airline" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Transactions" Relationship="AirportInventoryModel.FK__Transacti__Aircr__440B1D61" FromRole="Aircraft" ToRole="Transaction" />
+        </EntityType>
+        <EntityType Name="Airport">
+          <Key>
+            <PropertyRef Name="AirportId" />
+          </Key>
+          <Property Name="AirportId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AirportName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Fuel_Capacity_Available" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Transactions" Relationship="AirportInventoryModel.FK__Transacti__Airpo__4316F928" FromRole="Airport" ToRole="Transaction" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UseName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserEmail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsLoggedIn" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="AirportInventoryEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Aircrafts" EntityType="Self.Aircraft" />
+          <EntitySet Name="Airports" EntityType="Self.Airport" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="Transactions" EntityType="AirportInventoryModel.Transaction" />
+          <AssociationSet Name="FK__Transacti__Aircr__440B1D61" Association="AirportInventoryModel.FK__Transacti__Aircr__440B1D61">
+            <End Role="Aircraft" EntitySet="Aircrafts" />
+            <End Role="Transaction" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transacti__Airpo__4316F928" Association="AirportInventoryModel.FK__Transacti__Airpo__4316F928">
+            <End Role="Airport" EntitySet="Airports" />
+            <End Role="Transaction" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transacti__Trans__4222D4EF" Association="AirportInventoryModel.FK__Transacti__Trans__4222D4EF">
+            <End Role="Transaction" EntitySet="Transactions" />
+            <End Role="Transaction1" EntitySet="Transactions" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="Transaction_Id" />
+          </Key>
+          <Property Name="Transaction_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Transaction_Type" Type="Boolean" Nullable="false" />
+          <Property Name="Transaction_DateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Transaction_Parent_Id" Type="Int32" />
+          <Property Name="Airport_Id" Type="Int32" Nullable="false" />
+          <Property Name="Aircraft_Id" Type="Int32" />
+          <NavigationProperty Name="Aircraft" Relationship="AirportInventoryModel.FK__Transacti__Aircr__440B1D61" FromRole="Transaction" ToRole="Aircraft" />
+          <NavigationProperty Name="Airport" Relationship="AirportInventoryModel.FK__Transacti__Airpo__4316F928" FromRole="Transaction" ToRole="Airport" />
+          <NavigationProperty Name="Transactions1" Relationship="AirportInventoryModel.FK__Transacti__Trans__4222D4EF" FromRole="Transaction" ToRole="Transaction1" />
+          <NavigationProperty Name="Transaction1" Relationship="AirportInventoryModel.FK__Transacti__Trans__4222D4EF" FromRole="Transaction1" ToRole="Transaction" />
+        </EntityType>
+        <Association Name="FK__Transacti__Aircr__440B1D61">
+          <End Type="AirportInventoryModel.Aircraft" Role="Aircraft" Multiplicity="0..1" />
+          <End Type="AirportInventoryModel.Transaction" Role="Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aircraft">
+              <PropertyRef Name="AircraftId" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="Aircraft_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transacti__Airpo__4316F928">
+          <End Type="AirportInventoryModel.Airport" Role="Airport" Multiplicity="1" />
+          <End Type="AirportInventoryModel.Transaction" Role="Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airport">
+              <PropertyRef Name="AirportId" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="Airport_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transacti__Trans__4222D4EF">
+          <End Type="AirportInventoryModel.Transaction" Role="Transaction" Multiplicity="0..1" />
+          <End Type="AirportInventoryModel.Transaction" Role="Transaction1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transaction">
+              <PropertyRef Name="Transaction_Id" />
+            </Principal>
+            <Dependent Role="Transaction1">
+              <PropertyRef Name="Transaction_Parent_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AirportInventoryModelStoreContainer" CdmEntityContainer="AirportInventoryEntities">
+          <EntitySetMapping Name="Aircrafts">
+            <EntityTypeMapping TypeName="AirportInventoryModel.Aircraft">
+              <MappingFragment StoreEntitySet="Aircrafts">
+                <ScalarProperty Name="AircraftId" ColumnName="AircraftId" />
+                <ScalarProperty Name="Aircraft_No" ColumnName="Aircraft_No" />
+                <ScalarProperty Name="Airline" ColumnName="Airline" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Airports">
+            <EntityTypeMapping TypeName="AirportInventoryModel.Airport">
+              <MappingFragment StoreEntitySet="Airports">
+                <ScalarProperty Name="AirportId" ColumnName="AirportId" />
+                <ScalarProperty Name="AirportName" ColumnName="AirportName" />
+                <ScalarProperty Name="Fuel_Capacity_Available" ColumnName="Fuel_Capacity_Available" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="AirportInventoryModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UseName" ColumnName="UseName" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="IsLoggedIn" ColumnName="IsLoggedIn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transactions">
+            <EntityTypeMapping TypeName="AirportInventoryModel.Transaction">
+              <MappingFragment StoreEntitySet="Transactions">
+                <ScalarProperty Name="Aircraft_Id" ColumnName="Aircraft_Id" />
+                <ScalarProperty Name="Airport_Id" ColumnName="Airport_Id" />
+                <ScalarProperty Name="Transaction_Parent_Id" ColumnName="Transaction_Parent_Id" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Transaction_DateTime" ColumnName="Transaction_DateTime" />
+                <ScalarProperty Name="Transaction_Type" ColumnName="Transaction_Type" />
+                <ScalarProperty Name="Transaction_Id" ColumnName="Transaction_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
